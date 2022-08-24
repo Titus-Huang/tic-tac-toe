@@ -14,6 +14,7 @@ Source: https://gist.git.generalassemb.ly/kasun/6c594180b30ee78feb3ff42547f4afea
 
 .core-game {
     display: flex;
+    width: fit-content;
 }
 
 .column {
