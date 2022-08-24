@@ -253,3 +253,16 @@ function checkWinState(isPlayer1) {
         }
     }
 }
+
+
+
+// Restart button
+
+var restartButton = document.querySelector("#ui-game-restart-button");
+
+restartButton.addEventListener("click", function (event) {
+    // restart button can only be pressed after the first turn
+    if (turnCount > 0) {
+        alert("ping!");
+    }
+})

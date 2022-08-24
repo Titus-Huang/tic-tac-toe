@@ -70,3 +70,34 @@ main {
 #ui-player-1-turn-indicator, #ui-player-2-turn-indicator {
     font-style: italic;
 }
+
+#ui-loading-bar {
+    display: inline-block;
+    padding: 0;
+    width: 21rem;
+    height: 1.75rem;
+
+    background-color: lightgreen;
+    border: 2px solid grey;
+    border-radius: 0.5rem;
+}
+
+#ui-loading-bar-slider {
+    height: inherit;
+    width: 0%;
+
+    background-color: lightcoral;
+    border-radius: 0.35rem;
+
+    /* animation: loading-bar-animation 5s 5; */
+}
+
+/* @keyframes loading-bar-animation {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+} */
