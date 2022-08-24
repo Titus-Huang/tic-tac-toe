@@ -4,7 +4,9 @@ Source: https://gist.git.generalassemb.ly/kasun/6c594180b30ee78feb3ff42547f4afea
 
 /* Layout tags */
 
-
+body {
+    margin: 0;
+}
 
 /* Text tags */
 
@@ -13,7 +15,16 @@ Source: https://gist.git.generalassemb.ly/kasun/6c594180b30ee78feb3ff42547f4afea
 /* Class tags */
 
 .game-row {
+    display: flex;
+    margin: 5rem 0;
     height: fit-content;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-player-1, .ui-player-2 {
+    margin: 0 1rem;
+    padding: 0 2rem;
 }
 
 .core-game {

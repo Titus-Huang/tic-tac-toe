@@ -72,11 +72,9 @@ function placeDownSymbol(domLocation, symbolToPlace) {
     var isPlayer1 = (symbolToPlace === player1Symbol);
     if (isPlayer1) {
         player1SymbolsPlacement.push(clickedIndexLocation);
-        player1SymbolsPlacement.sort();
         console.log(`Player 1 symbol placement: ${player1SymbolsPlacement}`);
     } else {
         player2SymbolsPlacement.push(clickedIndexLocation);
-        player2SymbolsPlacement.sort();
         console.log(`Player 2 symbol placement: ${player2SymbolsPlacement}`);
     }
 }
@@ -116,5 +114,19 @@ function checkIfSymbolIsPlaced(domLocation) {
 // Then also give the switch statements a try! See if it is simpler or cleaner AND more readble to look at
 
 function checkWinState(){
+    var allSelections = {player1SymbolsPlacement, player2SymbolsPlacement};
 
+    if (isBoxTicked(player1SymbolsPlacement, 0) && 
+    isBoxTicked(player1SymbolsPlacement, 3) && 
+    isBoxTicked(player1SymbolsPlacement, 6)) {
+        console.log("player 1 won via Win 1");
+    } else if (isBoxTicked(player1SymbolsPlacement, 1) && 
+    isBoxTicked(player1SymbolsPlacement, 4) && 
+    isBoxTicked(player1SymbolsPlacement, 7)) {
+        console.log("player 1 won via Win 2");
+    }
+}
+
+function isBoxTicked(boxes, index) {
+    return boxes.indexOf(index) !== -1;
 }
