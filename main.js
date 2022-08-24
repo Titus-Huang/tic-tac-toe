@@ -35,8 +35,11 @@ clickableArea.addEventListener("click", function(event) {
     // Player has finished their move, time to increment the turn number
     turnNumber++;
 
-    // check the win state after every symbol placement
-    checkWinState();
+    // check the win state after 5 moves
+    if (turnNumber > 4) {
+        console.log("checking for win now");
+        checkWinState();
+    }
 
     // alerts the player that the game has finished as all turns has been used up
     if (turnNumber > 8) {
@@ -72,9 +75,11 @@ function placeDownSymbol(domLocation, symbolToPlace) {
     var isPlayer1 = (symbolToPlace === player1Symbol);
     if (isPlayer1) {
         player1SymbolsPlacement.push(clickedIndexLocation);
+        player1SymbolsPlacement.sort();
         console.log(`Player 1 symbol placement: ${player1SymbolsPlacement}`);
     } else {
         player2SymbolsPlacement.push(clickedIndexLocation);
+        player2SymbolsPlacement.sort();
         console.log(`Player 2 symbol placement: ${player2SymbolsPlacement}`);
     }
 }
@@ -107,6 +112,14 @@ function checkIfSymbolIsPlaced(domLocation) {
 // Win 6 - 6, 7, 8
 // Win 7 - 0, 4, 8
 // Win 8 - 2, 4, 6
+var win1Condition = [0, 3, 6]
+var win2Condition = [1, 4, 7]
+var win3Condition = [2, 5, 8]
+var win4Condition = [0, 1, 2]
+var win5Condition = [3, 4, 5]
+var win6Condition = [6, 7, 8]
+var win7Condition = [0, 4, 8]
+var win8Condition = [2, 4, 6]
 
 // Is there a way to simplfy the checks using numerical methods?
 // No
@@ -114,19 +127,12 @@ function checkIfSymbolIsPlaced(domLocation) {
 // Then also give the switch statements a try! See if it is simpler or cleaner AND more readble to look at
 
 function checkWinState(){
-    var allSelections = {player1SymbolsPlacement, player2SymbolsPlacement};
 
-    if (isBoxTicked(player1SymbolsPlacement, 0) && 
-    isBoxTicked(player1SymbolsPlacement, 3) && 
-    isBoxTicked(player1SymbolsPlacement, 6)) {
-        console.log("player 1 won via Win 1");
-    } else if (isBoxTicked(player1SymbolsPlacement, 1) && 
-    isBoxTicked(player1SymbolsPlacement, 4) && 
-    isBoxTicked(player1SymbolsPlacement, 7)) {
-        console.log("player 1 won via Win 2");
-    }
-}
 
-function isBoxTicked(boxes, index) {
-    return boxes.indexOf(index) !== -1;
+
+    // if (player1SymbolsPlacement.includes(win1Condition)) {
+    //     console.log("player 1 won via Win 1");
+    // } else if (player1SymbolsPlacement.includes(win2Condition)) {
+    //     console.log("player 1 won via Win 2");
+    // }
 }
