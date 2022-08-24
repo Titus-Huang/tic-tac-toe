@@ -12,7 +12,24 @@ Source: https://gist.git.generalassemb.ly/kasun/6c594180b30ee78feb3ff42547f4afea
 
 /* Class tags */
 
+.core-game {
+    display: flex;
+}
 
+.column {
+    display: inline-block;
+}
+
+.square {
+    margin: 0;
+    height: 3rem;
+    width: 3rem;
+
+    border: 1px solid grey;
+    background-color: cadetblue;
+
+    text-align: center;
+}
 
 /* Id tags */
 
