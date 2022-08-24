@@ -13,15 +13,17 @@ var player1Symbol = "O";
 var player1SymbolsPlacement = [];
 var player1Score = 0;
 var player1ScoreUI = document.querySelector("#ui-player-1-score");
+var player1TurnIndicatorUI = document.querySelector("#ui-player-1-turn-indicator");
 
 var player2Name = "Player 2";
 var player2Symbol = "X";
 var player2SymbolsPlacement = [];
 var player2Score = 0;
 var player2ScoreUI = document.querySelector("#ui-player-2-score");
+var player2TurnIndicatorUI = document.querySelector("#ui-player-2-turn-indicator");
 
 var gameFinished = false;
-var playerWonLastGame = "";
+var playerWonLastGame = [];
 
 // Makes the squares "clickable"
 // Unsure if should be using buttons or divs, going to go with divs for now
@@ -48,6 +50,11 @@ clickableArea.addEventListener("click", function(event) {
         if (turnCount > 3) {
             checkWinState(true);
         }
+
+        if (gameFinished === false) {
+            player1TurnIndicatorUI.textContent = "";
+            player2TurnIndicatorUI.textContent = "current turn";
+        }
     } else if (turnCount % 2 === 1) {
         console.log("player 2 placed");
         placeDownSymbol(event.target, player2Symbol, false); // Player 2's turn
@@ -56,18 +63,36 @@ clickableArea.addEventListener("click", function(event) {
         if (turnCount > 3) {
             checkWinState(false);
         }
+
+        if (gameFinished === false) {
+            player1TurnIndicatorUI.textContent = "current turn";
+            player2TurnIndicatorUI.textContent = "";
+        }
     }
 
     // alerts the player that the game has finished as all turns has been used up
-    if (turnCount > maxTurns || gameFinished === true) {
+    if (turnCount >= maxTurns || gameFinished === true) {
 
         console.log("The game is finished");
 
-        // temporary debug "announcement" when game is "finished"
-        if (turnCount > maxTurns) {
-            uiGameAnnouncement.textContent = "All turns are used up, the game is finished";
+        // no one won the last game, so it was a draw!
+        if (gameFinished !== true) {
+            gameFinished = true;
+
+            playerWonLastGame.push("");
+
+            // Rules for me are, if it is a draw. Both players get the points
+            if (turnCount >= maxTurns) {
+                uiGameAnnouncement.textContent = "All turns are used up, the result is a DRAW";
+
+                player1Score++;
+                player1ScoreUI.textContent = player1Score;
+                player2Score++;
+                player2ScoreUI.textContent = player2Score;
+            }
         } else {
-            uiGameAnnouncement.textContent = playerWonLastGame + " won the game in " + (turnCount + 1) + " moves, game is now finished.";
+            // temporary debug "announcement" when game is "finished"
+            uiGameAnnouncement.textContent = playerWonLastGame[playerWonLastGame.length - 1] + " won the game in " + (turnCount + 1) + " moves, game is now finished.";
         }
     } else {
         // Increment the turn number and update the UI as the game is progressing
@@ -220,11 +245,11 @@ function checkWinState(isPlayer1) {
         if (isPlayer1) {
             player1Score++;
             player1ScoreUI.textContent = player1Score;
-            playerWonLastGame = player1Name;
+            playerWonLastGame.push(player1Name);
         } else {
             player2Score++;
             player2ScoreUI.textContent = player2Score;
-            playerWonLastGame = player2Name;
+            playerWonLastGame.push(player2Name);
         }
     }
 }

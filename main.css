@@ -20,15 +20,24 @@ main {
 
 .game-row {
     display: flex;
-    margin: 4rem 0;
+    margin: 4.5rem 0;
     height: fit-content;
     align-items: center;
     justify-content: center;
 }
 
 .ui-player-1, .ui-player-2 {
-    margin: 0 1rem;
-    padding: 0 2rem;
+    display: flex;
+    margin: 0 3rem;
+    width: 7rem;
+    height: 10rem;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ui-player-title, .ui-player-score {
+    margin: 0.25rem 0;
+    height: 2rem;
 }
 
 .core-game {
@@ -42,15 +51,22 @@ main {
 
 .square {
     margin: 0;
-    height: 3rem;
-    width: 3rem;
+    height: 4rem;
+    width: 4rem;
 
     border: 1px solid grey;
     background-color: cadetblue;
 
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+}
+
+.square p {
+    margin-block-start: 1.5em;
 }
 
 /* Id tags */
 
-
+#ui-player-1-turn-indicator, #ui-player-2-turn-indicator {
+    font-style: italic;
+}
