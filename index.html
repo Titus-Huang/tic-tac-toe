@@ -27,24 +27,37 @@
     
         <!-- Section containing the "Tic Tac Toe" game -->
         <section>
-            <div class="core-game">
-                <div class="column">
-                    <div class="square"><p></p></div>
-                    <div class="square"><p></p></div>
-                    <div class="square"><p></p></div>
+            <div class="game-row">
+                <div class="ui-player-1">
+                    <h2>Player 1</h2>
+                    <p>Score: <span id="ui-player-1-score">0</span></p>
                 </div>
-                <div class="column">
-                    <div class="square"><p></p></div>
-                    <div class="square"><p></p></div>
-                    <div class="square"><p></p></div>
+
+                <div class="core-game">
+                    <div class="column">
+                        <div class="square"><p></p></div>
+                        <div class="square"><p></p></div>
+                        <div class="square"><p></p></div>
+                    </div>
+                    <div class="column">
+                        <div class="square"><p></p></div>
+                        <div class="square"><p></p></div>
+                        <div class="square"><p></p></div>
+                    </div>
+                    <div class="column">
+                        <div class="square"><p></p></div>
+                        <div class="square"><p></p></div>
+                        <div class="square"><p></p></div>
+                    </div>
                 </div>
-                <div class="column">
-                    <div class="square"><p></p></div>
-                    <div class="square"><p></p></div>
-                    <div class="square"><p></p></div>
+
+                <div class="ui-player-2">
+                    <h2>Player 2:</h2>
+                    <p>Score: <span id="ui-player-2-score">0</span></p>
                 </div>
             </div>
-            <div>
+
+            <div class="game-announcement-row">
                 <h3 id="game-announcement"></h3>
             </div>
         </section>
