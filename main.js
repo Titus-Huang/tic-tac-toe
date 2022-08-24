@@ -7,50 +7,69 @@
 // "Player two" has their turn on "odd" numbers
 
 var turnNumber = 0;
+
+var player1Name = "";
 var player1Symbol = "O";
 var player1SymbolsPlacement = [];
+var player1Score = 0;
+var player1ScoreUI = document.querySelector("#ui-player-1-score");
+
+var player2Name = "";
 var player2Symbol = "X";
 var player2SymbolsPlacement = [];
+var player2Score = 0;
+var player2ScoreUI = document.querySelector("#ui-player-2-score");
 
+var gameFinished = false;
 
 // Makes the squares "clickable"
 // Unsure if should be using buttons or divs, going to go with divs for now
 var clickableArea = document.querySelector(".core-game");
 var squares = document.querySelectorAll(".square");
 
+var maxTurns = squares.length - 1;
+
 clickableArea.addEventListener("click", function(event) {
-    if (turnNumber > 8 || checkIfSymbolIsPlaced(event.target)) {
+    if (turnNumber > maxTurns || checkIfSymbolIsPlaced(event.target) || gameFinished === true) {
         // Will not allow anyone to place down any more symbols once all boxes are filled
         // Also will not allow players to place down symbols if there is already one within the box
         return;
     }
-
+    
     // calculates which player's term is it based on the odd or evens
     if (turnNumber % 2 === 0 || turnNumber === 0) {
-        placeDownSymbol(event.target, player1Symbol); // Player 1's turn
+        console.log("player 1 placed");
+        placeDownSymbol(event.target, player1Symbol, true); // Player 1's turn
+
+        // check the win state on move 4
+        if (turnNumber > 3) {
+            checkWinState(true);
+        }
     } else if (turnNumber % 2 === 1) {
-        placeDownSymbol(event.target, player2Symbol); // Player 2's turn
+        console.log("player 2 placed");
+        placeDownSymbol(event.target, player2Symbol, false); // Player 2's turn
+
+        // check the win state on move 4
+        if (turnNumber > 3) {
+            checkWinState(false);
+        }
     }
 
-    // Player has finished their move, time to increment the turn number
+    // Increment the turn number
     turnNumber++;
 
-    // check the win state after 5 moves
-    if (turnNumber > 4) {
-        console.log("checking for win now");
-        checkWinState();
-    }
-
     // alerts the player that the game has finished as all turns has been used up
-    if (turnNumber > 8) {
+    if (turnNumber > maxTurns || gameFinished === true) {
+
         console.log("The game is finished");
+
         // temporary debug "announcement" when game is "finished"
         document.querySelector("#game-announcement").textContent = "All turns are used up, the game is finished";
     }
 })
 
 // function that places down the symbol by the player
-function placeDownSymbol(domLocation, symbolToPlace) {
+function placeDownSymbol(domLocation, symbolToPlace, isPlayer1) {
     // Starts off with -1 so it's invalid unless chosen
     var clickedIndexLocation = -1;
 
@@ -72,15 +91,14 @@ function placeDownSymbol(domLocation, symbolToPlace) {
     }
 
     // pushes the appropriate box index to the appropriate player once the index has been found
-    var isPlayer1 = (symbolToPlace === player1Symbol);
     if (isPlayer1) {
         player1SymbolsPlacement.push(clickedIndexLocation);
         player1SymbolsPlacement.sort();
-        console.log(`Player 1 symbol placement: ${player1SymbolsPlacement}`);
+        //console.log(`Player 1 symbol placement: ${player1SymbolsPlacement}`);
     } else {
         player2SymbolsPlacement.push(clickedIndexLocation);
         player2SymbolsPlacement.sort();
-        console.log(`Player 2 symbol placement: ${player2SymbolsPlacement}`);
+        //console.log(`Player 2 symbol placement: ${player2SymbolsPlacement}`);
     }
 }
 
@@ -112,27 +130,90 @@ function checkIfSymbolIsPlaced(domLocation) {
 // Win 6 - 6, 7, 8
 // Win 7 - 0, 4, 8
 // Win 8 - 2, 4, 6
-var win1Condition = [0, 3, 6]
-var win2Condition = [1, 4, 7]
-var win3Condition = [2, 5, 8]
-var win4Condition = [0, 1, 2]
-var win5Condition = [3, 4, 5]
-var win6Condition = [6, 7, 8]
-var win7Condition = [0, 4, 8]
-var win8Condition = [2, 4, 6]
+const win1Condition = [0, 3, 6]
+const win2Condition = [1, 4, 7]
+const win3Condition = [2, 5, 8]
+const win4Condition = [0, 1, 2]
+const win5Condition = [3, 4, 5]
+const win6Condition = [6, 7, 8]
+const win7Condition = [0, 4, 8]
+const win8Condition = [2, 4, 6]
+const allWinConditions = [win1Condition, win2Condition, win3Condition, win4Condition, win5Condition, win6Condition, win7Condition, win8Condition];
 
 // Is there a way to simplfy the checks using numerical methods?
 // No
 // Start the test with if statement to see if it works first, one "win statement at a time". Horizontal, then vertical, and then diagonal
 // Then also give the switch statements a try! See if it is simpler or cleaner AND more readble to look at
 
-function checkWinState(){
+function checkWinState(isPlayer1) {
+    var winConditionMatch = [];
+    var winConditionAmount = 0;
+    var symbolsPlacementCheck = isPlayer1 ? player1SymbolsPlacement : player2SymbolsPlacement;
+    var playerNameToDisplay = isPlayer1 ? "Player 1" : "Player 2";
 
+    for (var i = 0; i < allWinConditions.length; i++) {
+        winConditionAmount = 0;
+        for (var j = 0; j < allWinConditions[i].length; j++) {
+            if (symbolsPlacementCheck.indexOf(allWinConditions[i][j]) !== -1) {
+                //console.log(`Win ${i + 1} with box ${allWinConditions[i][j]}`);
+                winConditionAmount++;
+            }
 
+            if (winConditionAmount === 3) {
+                console.log(allWinConditions[i]);
+                winConditionMatch = allWinConditions[i];
+                gameFinished = true;
+            }
+        }
+    }
 
-    // if (player1SymbolsPlacement.includes(win1Condition)) {
-    //     console.log("player 1 won via Win 1");
-    // } else if (player1SymbolsPlacement.includes(win2Condition)) {
-    //     console.log("player 1 won via Win 2");
-    // }
+    //console.log(`Win Conditions set: ${winConditionMatch}`);
+    //console.log(winConditionMatch);
+
+    switch (winConditionMatch) {
+        case win1Condition:
+            console.log(`${playerNameToDisplay} won via Win 1`);
+            break;
+        case win2Condition:
+            console.log(`${playerNameToDisplay} won via Win 2`);
+            break;
+        case win3Condition:
+            console.log(`${playerNameToDisplay} won via Win 3`);
+            break;
+        case win4Condition:
+            console.log(`${playerNameToDisplay} won via Win 4`);
+            break;
+        case win5Condition:
+            console.log(`${playerNameToDisplay} won via Win 5`);
+            break;
+        case win6Condition:
+            console.log(`${playerNameToDisplay} won via Win 6`);
+            break;
+        case win7Condition:
+            console.log(`${playerNameToDisplay} won via Win 7`);
+            break;
+        case win8Condition:
+            console.log(`${playerNameToDisplay} won via Win 8`);
+            break;
+        default:
+            // this means that no one won yet
+            break;
+    }
+
+    //console.log(winConditionMatch !== []);
+    //console.log(winConditionMatch);
+
+    // this will run if a win condition was matched
+    if (winConditionAmount === 3) {
+        //console.log(`It should not be null: ${winConditionMatch}`);
+
+        if (isPlayer1) {
+            player1Score++;
+            player1ScoreUI.textContent = player1Score;
+        } else {
+            player2Score++;
+            player2ScoreUI.textContent = player2Score;
+        }
+        gameFinished = true;
+    }
 }
