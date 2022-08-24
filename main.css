@@ -8,6 +8,10 @@ body {
     margin: 0;
 }
 
+main {
+    text-align: center;
+}
+
 /* Text tags */
 
 
@@ -16,7 +20,7 @@ body {
 
 .game-row {
     display: flex;
-    margin: 5rem 0;
+    margin: 4rem 0;
     height: fit-content;
     align-items: center;
     justify-content: center;

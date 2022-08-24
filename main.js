@@ -6,66 +6,76 @@
 // "Player one" has their turn on "even" numbers
 // "Player two" has their turn on "odd" numbers
 
-var turnNumber = 0;
+var turnCount = 0;
 
-var player1Name = "";
+var player1Name = "Player 1";
 var player1Symbol = "O";
 var player1SymbolsPlacement = [];
 var player1Score = 0;
 var player1ScoreUI = document.querySelector("#ui-player-1-score");
 
-var player2Name = "";
+var player2Name = "Player 2";
 var player2Symbol = "X";
 var player2SymbolsPlacement = [];
 var player2Score = 0;
 var player2ScoreUI = document.querySelector("#ui-player-2-score");
 
 var gameFinished = false;
+var playerWonLastGame = "";
 
 // Makes the squares "clickable"
 // Unsure if should be using buttons or divs, going to go with divs for now
 var clickableArea = document.querySelector(".core-game");
 var squares = document.querySelectorAll(".square");
+var uiTurnTracker = document.querySelector("#ui-turn-tracker");
+var uiGameAnnouncement = document.querySelector("#ui-game-announcement");
 
 var maxTurns = squares.length - 1;
 
 clickableArea.addEventListener("click", function(event) {
-    if (turnNumber > maxTurns || checkIfSymbolIsPlaced(event.target) || gameFinished === true) {
+    if (turnCount > maxTurns || checkIfSymbolIsPlaced(event.target) || gameFinished === true) {
         // Will not allow anyone to place down any more symbols once all boxes are filled
         // Also will not allow players to place down symbols if there is already one within the box
         return;
     }
     
     // calculates which player's term is it based on the odd or evens
-    if (turnNumber % 2 === 0 || turnNumber === 0) {
+    if (turnCount % 2 === 0 || turnCount === 0) {
         console.log("player 1 placed");
         placeDownSymbol(event.target, player1Symbol, true); // Player 1's turn
 
         // check the win state on move 4
-        if (turnNumber > 3) {
+        if (turnCount > 3) {
             checkWinState(true);
         }
-    } else if (turnNumber % 2 === 1) {
+    } else if (turnCount % 2 === 1) {
         console.log("player 2 placed");
         placeDownSymbol(event.target, player2Symbol, false); // Player 2's turn
 
         // check the win state on move 4
-        if (turnNumber > 3) {
+        if (turnCount > 3) {
             checkWinState(false);
         }
     }
 
-    // Increment the turn number
-    turnNumber++;
-
     // alerts the player that the game has finished as all turns has been used up
-    if (turnNumber > maxTurns || gameFinished === true) {
+    if (turnCount > maxTurns || gameFinished === true) {
 
         console.log("The game is finished");
 
         // temporary debug "announcement" when game is "finished"
-        document.querySelector("#game-announcement").textContent = "All turns are used up, the game is finished";
+        if (turnCount > maxTurns) {
+            uiGameAnnouncement.textContent = "All turns are used up, the game is finished";
+        } else {
+            uiGameAnnouncement.textContent = playerWonLastGame + " won the game in " + (turnCount + 1) + " moves, game is now finished.";
+        }
+    } else {
+        // Increment the turn number and update the UI as the game is progressing
+        turnCount++;
     }
+
+    // Once the turn count has been updated, update it in the browser
+    uiTurnTracker.textContent = "Turn " + (turnCount + 1);
 })
 
 // function that places down the symbol by the player
@@ -160,7 +170,7 @@ function checkWinState(isPlayer1) {
             }
 
             if (winConditionAmount === 3) {
-                console.log(allWinConditions[i]);
+                //console.log(allWinConditions[i]);
                 winConditionMatch = allWinConditions[i];
                 gameFinished = true;
             }
@@ -201,19 +211,20 @@ function checkWinState(isPlayer1) {
     }
 
     //console.log(winConditionMatch !== []);
-    //console.log(winConditionMatch);
+    // console.log(winConditionMatch);
 
     // this will run if a win condition was matched
-    if (winConditionAmount === 3) {
+    if (gameFinished === true) {
         //console.log(`It should not be null: ${winConditionMatch}`);
 
         if (isPlayer1) {
             player1Score++;
             player1ScoreUI.textContent = player1Score;
+            playerWonLastGame = player1Name;
         } else {
             player2Score++;
             player2ScoreUI.textContent = player2Score;
+            playerWonLastGame = player2Name;
         }
-        gameFinished = true;
     }
 }
