@@ -38,9 +38,14 @@ footer p {
     margin: 0;
 }
 
+
+
+
+
 /* Text tags */
 
 h1, h2, h3 {
+    font-family: 'Montserrat', Tahoma, Verdana, sans-serif;
     color: #DD6E42;
 }
 
@@ -48,9 +53,12 @@ h1 {
     margin: 0;
     padding: 0.5rem 0;
 
-    font-family: 'Montserrat', Tahoma, Verdana, sans-serif;
     font-size: 3.5rem;
 }
+
+
+
+
 
 /* Class tags */
 
@@ -110,6 +118,9 @@ h1 {
 }
 
 
+
+
+
 /* Id tags */
 
 #ui-player-1-turn-indicator, #ui-player-2-turn-indicator {
@@ -136,6 +147,12 @@ h1 {
 
     /* animation: loading-bar-animation 5s 5; */
 }
+
+
+
+
+
+/* Animation keyframes */
 
 /* @keyframes loading-bar-animation {
     from {

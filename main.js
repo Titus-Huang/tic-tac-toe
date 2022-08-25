@@ -8,8 +8,10 @@
 
 var turnCount = 0;
 var gameCount = 0;
+var secondsPerTurn = 10;
 
 var isGameSquaresActive = true;
+var hasGameFinished = false;
 
 var player1Name = "Player 1";
 var player1Symbol = "O";
@@ -25,7 +27,6 @@ var player2Score = 0;
 var player2ScoreUI = document.querySelector("#ui-player-2-score");
 var player2TurnIndicatorUI = document.querySelector("#ui-player-2-turn-indicator");
 
-var hasGameFinished = false;
 var playerWonLastGame = [];
 
 // Makes the squares "clickable"
@@ -38,6 +39,10 @@ var uiGameAnnouncement = document.querySelector("#ui-game-announcement");
 
 var maxTurns = squares.length - 1;
 
+
+
+
+// the main "update cycle" of the website
 clickableArea.addEventListener("click", function(event) {
     if (turnCount > maxTurns || checkIfSymbolIsPlaced(event.target) ||
     hasGameFinished === true || isGameSquaresActive === false) {
@@ -157,6 +162,7 @@ function placeDownSymbol(domLocation, symbolToPlace, isPlayer1) {
     }
 }
 
+// grab location of if there is a symbol placed already
 function checkIfSymbolIsPlaced(domLocation) {
     if (domLocation.tagName === "DIV" && domLocation.className === "square") {
         return domLocation.querySelector("p").textContent !== "";
@@ -168,15 +174,16 @@ function checkIfSymbolIsPlaced(domLocation) {
     return false;
 }
 
+
+
+
 // Check win state
 // There are a total of... 8 win states within Tic Tac Toe
 // It would be a simple-ish check for if players have placed down enough of symbols to win
-
 // Layout of each square and their respective indexes within the above array "squares"
 // [0] [3] [6] 
 // [1] [4] [7]
 // [2] [5] [8]
-
 // Win 1 - 0, 3, 6
 // Win 2 - 1, 4, 7
 // Win 3 - 2, 5, 8
