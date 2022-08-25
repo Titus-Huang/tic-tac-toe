@@ -7,6 +7,9 @@
 // "Player two" has their turn on "odd" numbers
 
 var turnCount = 0;
+var gameCount = 0;
+
+var isGameSquaresActive = true;
 
 var player1Name = "Player 1";
 var player1Symbol = "O";
@@ -22,22 +25,25 @@ var player2Score = 0;
 var player2ScoreUI = document.querySelector("#ui-player-2-score");
 var player2TurnIndicatorUI = document.querySelector("#ui-player-2-turn-indicator");
 
-var gameFinished = false;
+var hasGameFinished = false;
 var playerWonLastGame = [];
 
 // Makes the squares "clickable"
 // Unsure if should be using buttons or divs, going to go with divs for now
 var clickableArea = document.querySelector(".core-game");
 var squares = document.querySelectorAll(".square");
+var uiGameCountTracker = document.querySelector("#ui-game-count-tracker");
 var uiTurnTracker = document.querySelector("#ui-turn-tracker");
 var uiGameAnnouncement = document.querySelector("#ui-game-announcement");
 
 var maxTurns = squares.length - 1;
 
 clickableArea.addEventListener("click", function(event) {
-    if (turnCount > maxTurns || checkIfSymbolIsPlaced(event.target) || gameFinished === true) {
+    if (turnCount > maxTurns || checkIfSymbolIsPlaced(event.target) ||
+    hasGameFinished === true || isGameSquaresActive === false) {
         // Will not allow anyone to place down any more symbols once all boxes are filled
         // Also will not allow players to place down symbols if there is already one within the box
+        // If the game is not active, no buttons can be clicked
         return;
     }
     
@@ -51,7 +57,7 @@ clickableArea.addEventListener("click", function(event) {
             checkWinState(true);
         }
 
-        if (gameFinished === false) {
+        if (hasGameFinished === false) {
             player1TurnIndicatorUI.textContent = "";
             player2TurnIndicatorUI.textContent = "current turn";
         }
@@ -64,20 +70,24 @@ clickableArea.addEventListener("click", function(event) {
             checkWinState(false);
         }
 
-        if (gameFinished === false) {
+        if (hasGameFinished === false) {
             player1TurnIndicatorUI.textContent = "current turn";
             player2TurnIndicatorUI.textContent = "";
         }
     }
 
     // alerts the player that the game has finished as all turns has been used up
-    if (turnCount >= maxTurns || gameFinished === true) {
+    if (turnCount >= maxTurns || hasGameFinished === true) {
 
         console.log("The game is finished");
 
+        // game count increments
+        gameCount++;
+
         // no one won the last game, so it was a draw!
-        if (gameFinished !== true) {
-            gameFinished = true;
+        if (hasGameFinished !== true) {
+            hasGameFinished = true;
+            isGameSquaresActive = false;
 
             playerWonLastGame.push("");
 
@@ -94,13 +104,23 @@ clickableArea.addEventListener("click", function(event) {
             // temporary debug "announcement" when game is "finished"
             uiGameAnnouncement.textContent = playerWonLastGame[playerWonLastGame.length - 1] + " won the game in " + (turnCount + 1) + " moves, game is now finished.";
         }
+
+        // now that everything above is complete, able to continue
+        if (continueButton.disabled === true) {
+            continueButton.disabled = false;
+        }
     } else {
         // Increment the turn number and update the UI as the game is progressing
         turnCount++;
     }
 
+    // Enable Restart button when turn 1 has finished playing
+    if (turnCount > 0 && restartButton.disabled === true) {
+        restartButton.disabled = false;
+    }
+
     // Once the turn count has been updated, update it in the browser
-    uiTurnTracker.textContent = "Turn " + (turnCount + 1);
+    uiTurnTracker.textContent = (turnCount + 1);
 })
 
 // function that places down the symbol by the player
@@ -165,15 +185,15 @@ function checkIfSymbolIsPlaced(domLocation) {
 // Win 6 - 6, 7, 8
 // Win 7 - 0, 4, 8
 // Win 8 - 2, 4, 6
-const win1Condition = [0, 3, 6]
-const win2Condition = [1, 4, 7]
-const win3Condition = [2, 5, 8]
-const win4Condition = [0, 1, 2]
-const win5Condition = [3, 4, 5]
-const win6Condition = [6, 7, 8]
-const win7Condition = [0, 4, 8]
-const win8Condition = [2, 4, 6]
-const allWinConditions = [win1Condition, win2Condition, win3Condition, win4Condition, win5Condition, win6Condition, win7Condition, win8Condition];
+var win1Condition = [0, 3, 6]
+var win2Condition = [1, 4, 7]
+var win3Condition = [2, 5, 8]
+var win4Condition = [0, 1, 2]
+var win5Condition = [3, 4, 5]
+var win6Condition = [6, 7, 8]
+var win7Condition = [0, 4, 8]
+var win8Condition = [2, 4, 6]
+var allWinConditions = [win1Condition, win2Condition, win3Condition, win4Condition, win5Condition, win6Condition, win7Condition, win8Condition];
 
 // Is there a way to simplfy the checks using numerical methods?
 // No
@@ -197,7 +217,7 @@ function checkWinState(isPlayer1) {
             if (winConditionAmount === 3) {
                 //console.log(allWinConditions[i]);
                 winConditionMatch = allWinConditions[i];
-                gameFinished = true;
+                hasGameFinished = true;
             }
         }
     }
@@ -239,7 +259,7 @@ function checkWinState(isPlayer1) {
     // console.log(winConditionMatch);
 
     // this will run if a win condition was matched
-    if (gameFinished === true) {
+    if (hasGameFinished === true) {
         //console.log(`It should not be null: ${winConditionMatch}`);
 
         if (isPlayer1) {
@@ -259,10 +279,60 @@ function checkWinState(isPlayer1) {
 // Restart button
 
 var restartButton = document.querySelector("#ui-game-restart-button");
+var continueButton = document.querySelector("#ui-game-continue-button");
 
+// restart the current game
 restartButton.addEventListener("click", function (event) {
     // restart button can only be pressed after the first turn
-    if (turnCount > 0) {
-        alert("ping!");
+    if (turnCount === 0) {
+        return;
     }
+
+    // Make sure the button is not clickable first
+    isGameSquaresActive = false;
+
+    // Reset game variables
+
+    // Resets the squares
+
+    // Reset the UI
+
+    // Now that the process is completed, can resume the game
+    isGameSquaresActive = true;
+    continueButton.disabled = true;
+    restartButton.disabled = true;
+})
+
+// continue the match
+continueButton.addEventListener("click", function (event) {
+    // only can continue if the match is finished
+    if (hasGameFinished === false) {
+        return;
+    }
+
+    // Make sure the button is not clickable first
+    isGameSquaresActive = false;
+
+    // Restart game variables
+    turnCount = 0;
+    player1SymbolsPlacement = [];
+    player2SymbolsPlacement = [];
+
+    // Reset the squares
+    for (var i = 0; i < squares.length; i++) {
+        squares[i].querySelector("p").textContent = "";
+    }
+
+    // Reset the UI
+    player1TurnIndicatorUI.textContent = "current turn";
+    player2TurnIndicatorUI.textContent = "";
+    uiGameCountTracker.textContent = (gameCount + 1);
+    uiTurnTracker.textContent = (turnCount + 1);
+    uiGameAnnouncement.textContent = "";
+
+    // Now that the process is completed, can resume the game
+    isGameSquaresActive = true;
+    hasGameFinished = false;
+    continueButton.disabled = true;
+    restartButton.disabled = true;
 })

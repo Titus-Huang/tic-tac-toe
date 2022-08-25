@@ -62,8 +62,11 @@
 
             <div class="game-announcement-row">
                 <div id="ui-loading-bar"><div id="ui-loading-bar-slider"></div></div>
-                <h2 id="ui-turn-tracker">Turn 1</h2>
-                <button id="ui-game-restart-button">Restart</button>
+                <h2>Game <span id="ui-game-count-tracker">1</span>, Turn <span id="ui-turn-tracker">1</span></h2>
+                <div>
+                    <button id="ui-game-continue-button" disabled>Continue</button>
+                    <button id="ui-game-restart-button" disabled>Restart</button>
+                </div>
                 <h3 id="ui-game-announcement"></h3>
             </div>
         </section>
