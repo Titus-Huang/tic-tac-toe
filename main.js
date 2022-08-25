@@ -284,7 +284,7 @@ var continueButton = document.querySelector("#ui-game-continue-button");
 // restart the current game
 restartButton.addEventListener("click", function (event) {
     // restart button can only be pressed after the first turn
-    if (turnCount === 0) {
+    if (turnCount === 0 && gameCount === 0) {
         return;
     }
 
@@ -292,10 +292,27 @@ restartButton.addEventListener("click", function (event) {
     isGameSquaresActive = false;
 
     // Reset game variables
+    turnCount = 0;
+    gameCount = 0;
+    player1Score = 0;
+    player1SymbolsPlacement = [];
+    player2Score = 0;
+    player2SymbolsPlacement = [];
+    playerWonLastGame = [];
 
-    // Resets the squares
+    // Reset the squares
+    for (var i = 0; i < squares.length; i++) {
+        squares[i].querySelector("p").textContent = "";
+    }
 
     // Reset the UI
+    player1TurnIndicatorUI.textContent = "current turn";
+    player1ScoreUI.textContent = player1Score;
+    player2TurnIndicatorUI.textContent = "";
+    player2ScoreUI.textContent = player2Score;
+    uiGameCountTracker.textContent = (gameCount + 1);
+    uiTurnTracker.textContent = (turnCount + 1);
+    uiGameAnnouncement.textContent = "";
 
     // Now that the process is completed, can resume the game
     isGameSquaresActive = true;
@@ -334,5 +351,5 @@ continueButton.addEventListener("click", function (event) {
     isGameSquaresActive = true;
     hasGameFinished = false;
     continueButton.disabled = true;
-    restartButton.disabled = true;
+    restartButton.disabled = (gameCount > 0) ? false : true;
 })
