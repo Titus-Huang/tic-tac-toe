@@ -2,10 +2,26 @@
 Due: Friday the 26th of August, 2022
 Source: https://gist.git.generalassemb.ly/kasun/6c594180b30ee78feb3ff42547f4afea */
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
 /* Layout tags */
 
 body {
     margin: 0;
+
+    background-color: #C0D6DF;
+}
+
+header {
+    padding: 1rem 0;
+
+    background-color: #4F6D7A;
+}
+
+header p {
+    margin: 0;
+
+    color: white;
 }
 
 main {
@@ -14,13 +30,23 @@ main {
 
 /* Text tags */
 
+h1, h2, h3 {
+    color: #DD6E42;
+}
 
+h1 {
+    margin: 0;
+    padding: 0.5rem 0;
+
+    font-family: 'Montserrat', Tahoma, Verdana, sans-serif;
+    font-size: 3.5rem;
+}
 
 /* Class tags */
 
 .game-row {
     display: flex;
-    margin: 4.5rem 0;
+    margin: 3rem 0;
     height: fit-content;
     align-items: center;
     justify-content: center;
@@ -55,15 +81,24 @@ main {
     width: 4rem;
 
     border: 1px solid grey;
-    background-color: cadetblue;
+    background-color: #4F6D7A;
 
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+
+    user-select: none;
 }
 
 .square p {
     margin-block-start: 1.5em;
 }
+
+.game-announcement-row {
+    padding: 2rem 0;
+
+    background-color: #E8DAB2;
+}
+
 
 /* Id tags */
 
