@@ -35,7 +35,7 @@
     
         <!-- Section containing the "Tic Tac Toe" game -->
         <!-- UI State Id: 00 -->
-        <section id="game-board" hidden>
+        <section id="game-board">
             <div class="game-row">
                 <div class="ui-player-1">
                     <h2 class="ui-player-title">Player 1</h2>
@@ -70,7 +70,7 @@
 
             <div class="game-announcement-row">
                 <div id="ui-loading-bar"><div id="ui-loading-bar-slider"></div></div>
-                <h2>Game <span id="ui-game-count-tracker">1</span>, Turn <span id="ui-turn-tracker">1</span></h2>
+                <h2>Round <span id="ui-round-count-tracker">1</span>, Turn <span id="ui-turn-tracker">1</span></h2>
                 <div>
                     <button id="ui-game-continue-button" disabled>Continue</button>
                     <button id="ui-game-restart-button" disabled>Restart</button>
@@ -80,7 +80,7 @@
         </section>
 
         <!-- UI State Id: 10 - 19 -->
-        <section id="game-settings">
+        <section id="game-settings" hidden>
             <div class="settings-row">
                 <div class="settings-menu-sidebar">
                     <ul>
@@ -99,23 +99,60 @@
                 </div>
                 <div class="settings-menu">
                     <div id="settings-user">
-                        <h2>Player 1</h2>
+                        <h2>User Settings</h2>
+
+                        <hr>
+                        <h3>Player 1</h3>
                         <hr>                        
                         <p>Player 1 name: <input type="text" name="Player 1 name (less than 12 characters)" id="ui-input-player-1-name" placeholder="Player 1" maxlength="12"></p>
                         <p>Player 1 symbol: <input type="text" name="Player 1 symbol" id="ui-input-player-1-symbol" placeholder="O" maxlength="1"></p>
+                        <p>Player 1 audio: <span>Choice 1 / Choice 2 /<br>Choice 3</span></p>
 
                         <hr>
-                        <h2>Player 2</h2>
+                        <h3>Player 2</h3>
                         <hr>
 
                         <p>Player 2 name: <input type="text" name="player 2 name (less than 12 characters)" id="ui-input-player-2-name" placeholder="Player 2" maxlength="12"></p>
                         <p>Player 2 symbol: <input type="text" name="Player 2 symbol" id="ui-input-player-2-symbol" placeholder="X" maxlength="1"></p>
+                        <p>Player 2 audio: <span>Choice 1 / Choice 2 /<br>Choice 3</span></p>
                     </div>
                     <div id="settings-game" hidden>
+                        <h2>Game Settings</h2>
 
+                        <hr>
+                        <h3>Round</h3>
+                        <hr>
+                        
+                        <p>Time per round: <span>8s, 12s, 15s</span></p>
+                        <p>Max round per game: <span>5, 7, 11, 15</span></p>
+
+                        <hr>
+                        <h3>Board</h3>
+                        <hr>
+
+                        <p>Board background: </p>
+                        <p>Board border: </p>
+
+                        <hr>
+                        <h3>Audio</h3>
+                        <hr>
+
+                        <p>*insert audio settings here*</p>
                     </div>
                     <div id="settings-import-export" hidden>
+                        <h2>Import/Export</h2>
 
+                        <hr>
+                        <h3>Import</h3>
+                        <hr>
+
+                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corporis numquam quidem dicta aliquam consequuntur praesentium tenetur. Labore explicabo, facilis nisi reprehenderit fugiat voluptatem nobis sint? Dolor quisquam deleniti repellendus alias!</p>
+
+                        <hr>
+                        <h3>Export</h3>
+                        <hr>
+
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor accusamus recusandae dolores nesciunt, perspiciatis corporis quae tempore explicabo id aliquid officiis quasi harum velit unde atque qui laboriosam asperiores ratione.</p>
                     </div>
                 </div>
             </div>

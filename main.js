@@ -33,7 +33,7 @@ var playerWonLastGame = [];
 // Unsure if should be using buttons or divs, going to go with divs for now
 var clickableArea = document.querySelector(".core-game");
 var squares = document.querySelectorAll(".square");
-var uiGameCountTracker = document.querySelector("#ui-game-count-tracker");
+var uiRoundCountTracker = document.querySelector("#ui-round-count-tracker");
 var uiTurnTracker = document.querySelector("#ui-turn-tracker");
 var uiGameAnnouncement = document.querySelector("#ui-game-announcement");
 
@@ -317,7 +317,7 @@ restartButton.addEventListener("click", function (event) {
     player1ScoreUI.textContent = player1Score;
     player2TurnIndicatorUI.textContent = "";
     player2ScoreUI.textContent = player2Score;
-    uiGameCountTracker.textContent = (gameCount + 1);
+    uiRoundCountTracker.textContent = (gameCount + 1);
     uiTurnTracker.textContent = (turnCount + 1);
     uiGameAnnouncement.textContent = "";
 
@@ -350,7 +350,7 @@ continueButton.addEventListener("click", function (event) {
     // Reset the UI
     player1TurnIndicatorUI.textContent = "current turn";
     player2TurnIndicatorUI.textContent = "";
-    uiGameCountTracker.textContent = (gameCount + 1);
+    uiRoundCountTracker.textContent = (gameCount + 1);
     uiTurnTracker.textContent = (turnCount + 1);
     uiGameAnnouncement.textContent = "";
 
@@ -381,10 +381,24 @@ var uiState = 00;
 // 10 - #game-settings
 // very simple check for which menu is being worked on atm
 var sections = document.querySelectorAll("section");
-updateUIState();
 
 var uiMenuGameButton = document.querySelector("#nav-btn-game");
 var uiMenuSettingsButton = document.querySelector("#nav-btn-settings");
+
+// Settings menu
+var uiMenuSettingsUser = document.querySelector("#settings-user");
+var uiMenuSettingsGame = document.querySelector("#settings-game");
+var uiMenuSettingsImportExport = document.querySelector("#settings-import-export");
+
+var uiMenuSettingsSections = [
+    uiMenuSettingsUser,
+    uiMenuSettingsGame,
+    uiMenuSettingsImportExport
+];
+
+
+updateUIState();
+
 
 // Opens Game
 uiMenuGameButton.addEventListener("click", function (event) {
@@ -410,6 +424,11 @@ uiMenuSettingsButton.addEventListener("click", function (event) {
     }
     //console.log("Settings menu button pressed");
 
+    // Make sure the user settings are opened
+    uiMenuSettingsSections[0].hidden = false;
+    uiMenuSettingsSections[1].hidden = true;
+    uiMenuSettingsSections[2].hidden = true;
+
     sections[0].hidden = sections[1].hidden;
     sections[1].hidden = !sections[0].hidden;
 
@@ -418,4 +437,66 @@ uiMenuSettingsButton.addEventListener("click", function (event) {
 
 function updateUIState() {
     uiState = (sections[0].hidden === true) ? 10 : 00;
+
+    if (uiState >= 10) {
+        // set this to 9, so if it is 9 afterwards. It means during development, ALL sections were disabled.
+        // to prevent an empty screen from showing up, make sure at least the uiState of 10 is achieved.
+        uiState = uiState - 1;
+        for (var i = 0; i < uiMenuSettingsSections.length; i++) {
+            if (uiMenuSettingsSections[i].hidden === false) {
+                uiState = uiState + i;
+            }
+        }
+
+        if (uiState === 9) {
+            uiMenuSettingsSections[0].hidden = false;
+            uiMenuSettingsSections[1].hidden = true;
+            uiMenuSettingsSections[2].hidden = true;
+
+            uiState = 10;
+        }
+    }
 }
+
+// uiState = 10
+var uiMenuSettingsUserButton = document.querySelectorAll(".settings-menu-sidebar>ul>li")[0];
+// uiState = 11
+var uiMenuSettingsGameButton = document.querySelectorAll(".settings-menu-sidebar>ul>li")[1];
+// uiState = 12
+var uiMenuSettingsImportExportButton = document.querySelectorAll(".settings-menu-sidebar>ul>li")[2];
+
+uiMenuSettingsUserButton.addEventListener("click", function (event) {
+    if (uiState === 10) {
+        return;
+    }
+
+    uiMenuSettingsSections[0].hidden = false;
+    uiMenuSettingsSections[1].hidden = true;
+    uiMenuSettingsSections[2].hidden = true;
+
+    uiState = 10;
+})
+
+uiMenuSettingsGameButton.addEventListener("click", function (event) {
+    if (uiState === 11) {
+        return;
+    }
+
+    uiMenuSettingsSections[0].hidden = true;
+    uiMenuSettingsSections[1].hidden = false;
+    uiMenuSettingsSections[2].hidden = true;
+
+    uiState = 11;
+})
+
+uiMenuSettingsImportExportButton.addEventListener("click", function (event) {
+    if (uiState === 12) {
+        return;
+    }
+
+    uiMenuSettingsSections[0].hidden = true;
+    uiMenuSettingsSections[1].hidden = true;
+    uiMenuSettingsSections[2].hidden = false;
+
+    uiState = 12;
+})

@@ -28,7 +28,8 @@ nav {
     display: flex;
     justify-content: center;
 
-    background-color: #888EE0;
+    /* background-color: #888EE0; */
+    animation: nav-anim 10s infinite;
 }
 
 nav div {
@@ -76,6 +77,8 @@ h1 {
     padding: 0.5rem 0;
 
     font-size: 3.5rem;
+
+    animation: h1-anim 15s infinite;
 }
 
 ul {
@@ -141,7 +144,10 @@ ul {
 }
 
 .square p {
-    margin-block-start: 1.5em;
+    margin: 0.55rem 0;
+
+    font-size: 2.5rem;
+    color: #D0D0D0;
 }
 
 .game-announcement-row {
@@ -258,7 +264,7 @@ ul {
     font-style: italic;
 }
 
-#settings-user p {
+#settings-user p, #settings-game p, #settings-import-export p {
     display: flex;
     justify-content: space-between;
     padding: 0 3rem;
@@ -279,3 +285,33 @@ ul {
         width: 100%;
     }
 } */
+
+@keyframes nav-anim {
+    0% {
+        background-color: #A5A1DD;
+    }
+    25% {
+        background-color: #7876DB;
+    }
+    50% {
+        background-color: #B289D3;
+    }
+    75% {
+        background-color: #7876DB;
+    }
+    100% {
+        background-color: #A5A1DD;
+    }
+}
+
+@keyframes h1-anim {
+    0% {
+        letter-spacing: 0rem;
+    }
+    50% {
+        letter-spacing: 1rem;
+    }
+    100% {
+        letter-spacing: 0rem;
+    }
+}
