@@ -54,13 +54,17 @@ h1 {
     padding: 0.5rem 0;
 
     font-size: 3.5rem;
-}
+} 
 
 
 
 
 
 /* Class tags */
+
+.ui-player-title {
+    text-decoration: underline;
+}
 
 .game-row {
     display: flex;
@@ -146,6 +150,35 @@ h1 {
     border-radius: 0.35rem;
 
     /* animation: loading-bar-animation 5s 5; */
+}
+
+#ui-game-continue-button, #ui-game-restart-button {
+    width: 6rem;
+    height: 2rem;
+    margin: 0 1.5rem;
+
+    font-style: normal;
+    color: #E0E0E0;
+}
+
+#ui-game-continue-button {
+    background-color: #50D020;
+}
+
+#ui-game-restart-button {
+    background-color: #F55550;
+}
+
+#ui-game-continue-button:hover, #ui-game-restart-button:hover {
+    font-weight: 600;;
+    font-style: italic;
+}
+
+#ui-game-continue-button:disabled, #ui-game-restart-button:disabled {
+    background-color: #B0B0B0;
+    color: #1F1F1F;
+
+    font-style: italic;
 }
 
 
