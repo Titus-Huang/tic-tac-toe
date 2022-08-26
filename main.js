@@ -360,3 +360,8 @@ continueButton.addEventListener("click", function (event) {
     continueButton.disabled = true;
     restartButton.disabled = (gameCount > 0) ? false : true;
 })
+
+
+
+
+// UI/UX navigation

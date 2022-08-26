@@ -24,6 +24,28 @@ header p {
     color: white;
 }
 
+nav {
+    display: flex;
+    justify-content: center;
+
+    background-color: #888EE0;
+}
+
+nav div {
+    padding: 1rem 2rem;
+    background-color: #888EE0;
+}
+
+nav div:hover {
+    cursor: pointer;
+    filter: brightness(0.9);
+}
+
+nav div p {
+    margin: 0;
+    user-select: none;
+}
+
 main {
     text-align: center;
 }
@@ -54,7 +76,14 @@ h1 {
     padding: 0.5rem 0;
 
     font-size: 3.5rem;
-} 
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+
+    list-style-type: none;
+}
 
 
 
@@ -66,7 +95,7 @@ h1 {
     text-decoration: underline;
 }
 
-.game-row {
+.game-row, .settings-row {
     display: flex;
     margin: 4rem 0;
     height: fit-content;
@@ -121,11 +150,58 @@ h1 {
     background-color: #E8DAB2;
 }
 
+.settings-row {
+    margin: 0;
+    align-items: flex-start;
+}
+
+.settings-menu-sidebar {
+    width: 14rem;
+    height: fit-content;
+
+    background-color: #E8DAB2;
+    
+    user-select: none;
+}
+
+.settings-menu-sidebar ul li {
+    padding: 0.75rem 0;
+
+    background-color: #E8DAB2;
+
+    cursor: pointer;
+}
+
+.settings-menu-sidebar ul li:hover {
+    filter: brightness(0.9);
+}
+
+.settings-menu {
+    width: 25rem;
+    height: inherit;
+
+    background-color: #E2CC93;
+}
+
 
 
 
 
 /* Id tags */
+
+#nav-btn-game {
+    border-top: 2px solid #101010;
+    border-right: 1px solid #101010;
+    border-bottom: 2px solid #101010;
+    border-left: 2px solid #101010;
+}
+
+#nav-btn-settings {
+    border-top: 2px solid #101010;
+    border-right: 2px solid #101010;
+    border-bottom: 2px solid #101010;
+    border-left: 1px solid #101010;
+}
 
 #ui-player-1-turn-indicator, #ui-player-2-turn-indicator {
     font-style: italic;
@@ -170,6 +246,7 @@ h1 {
 }
 
 #ui-game-continue-button:hover, #ui-game-restart-button:hover {
+    filter: brightness(90%);
     font-weight: 600;;
     font-style: italic;
 }
@@ -179,6 +256,12 @@ h1 {
     color: #1F1F1F;
 
     font-style: italic;
+}
+
+#settings-user p {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 3rem;
 }
 
 

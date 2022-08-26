@@ -25,11 +25,16 @@
 
         <!-- (Extension) Navigation bar, for opening/closing settings/etc -->
         <nav>
-
+            <div id="nav-btn-game">
+                <p>Game</p>
+            </div>
+            <div id="nav-btn-settings">
+                <p>Settings</p>
+            </div>
         </nav>
     
         <!-- Section containing the "Tic Tac Toe" game -->
-        <section class="game-board">
+        <section class="game-board" hidden>
             <div class="game-row">
                 <div class="ui-player-1">
                     <h2 class="ui-player-title">Player 1</h2>
@@ -74,7 +79,44 @@
         </section>
 
         <section class="game-settings">
-            <div></div>
+            <div class="settings-row">
+                <div class="settings-menu-sidebar">
+                    <ul>
+                        <li>User settings</li>
+                        <li>Game settings</li>
+                        <li>Import/Export</li>
+                    </ul>
+                    <!-- User customizability:
+                    Symbol, name, avatar -->
+
+                    <!-- Game customizability:
+                    Time per round, max amount of games/"amount to win a round", colours of square, audio settings -->
+                    
+                    <!-- Import/Export:
+                    Game saves -->
+                </div>
+                <div class="settings-menu">
+                    <div id="settings-user">
+                        <h2>Player 1</h2>
+                        <hr>                        
+                        <p>Player 1 name: <input type="text" name="Player 1 name (less than 12 characters)" id="ui-input-player-1-name" placeholder="Player 1" maxlength="12"></p>
+                        <p>Player 1 symbol: <input type="text" name="Player 1 symbol" id="ui-input-player-1-symbol" placeholder="O" maxlength="1"></p>
+
+                        <hr>
+                        <h2>Player 2</h2>
+                        <hr>
+
+                        <p>Player 2 name: <input type="text" name="player 2 name (less than 12 characters)" id="ui-input-player-2-name" placeholder="Player 2" maxlength="12"></p>
+                        <p>Player 2 symbol: <input type="text" name="Player 2 symbol" id="ui-input-player-2-symbol" placeholder="X" maxlength="1"></p>
+                    </div>
+                    <div id="settings-game" hidden>
+
+                    </div>
+                    <div id="settings-import-export" hidden>
+
+                    </div>
+                </div>
+            </div>
         </section>
     
         <!-- Footer at the bottom of the page -->
