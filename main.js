@@ -365,3 +365,57 @@ continueButton.addEventListener("click", function (event) {
 
 
 // UI/UX navigation
+
+// UI level state
+// 00 - Game
+// 10 - Menu (default "User settings")
+// 11 - Menu ("Game settings")
+// 12 - Menu ("Import/Export")
+// allows up to 19 encoded for game menus
+// 20 - About? (future)
+
+var uiState = 00;
+
+// checks which menu is open and sets the uiState
+// 00 - #game-board
+// 10 - #game-settings
+// very simple check for which menu is being worked on atm
+var sections = document.querySelectorAll("section");
+updateUIState();
+
+var uiMenuGameButton = document.querySelector("#nav-btn-game");
+var uiMenuSettingsButton = document.querySelector("#nav-btn-settings");
+
+// Opens Game
+uiMenuGameButton.addEventListener("click", function (event) {
+    if (uiState === 0) {
+        // already in game, no need to "go to game"
+        //console.log("Game menu button press being ignored");
+        return;
+    }
+    // console.log("Game menu button pressed");
+
+    sections[0].hidden = sections[1].hidden;
+    sections[1].hidden = !sections[0].hidden;
+
+    updateUIState();
+})
+
+// Opens Settings
+uiMenuSettingsButton.addEventListener("click", function (event) {
+    if ((uiState - 10) >= 0 && (uiState - 10) < 10) {
+        // already in settings, no need to "go to settings"
+        //console.log("Settings menu button press being ignored");
+        return;
+    }
+    //console.log("Settings menu button pressed");
+
+    sections[0].hidden = sections[1].hidden;
+    sections[1].hidden = !sections[0].hidden;
+
+    updateUIState();
+})
+
+function updateUIState() {
+    uiState = (sections[0].hidden === true) ? 10 : 00;
+}
