@@ -52,6 +52,9 @@ main {
 }
 
 footer {
+    /* bottom: 0;
+    position: sticky; */
+
     background-color: #EAEAEA;
 
     padding: 2rem 0 4rem 0;
